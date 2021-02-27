@@ -1,18 +1,15 @@
-# Work in Progress, has not been tested yet
-# Node class and some functions in DoublyLinkedList class initially taken from Rosetta Code:
-# http://www.rosettacode.org/wiki/Doubly-linked_list/Element_definition#Python
-# Insert function initially taken from Rosetta Code:
-# http://www.rosettacode.org/wiki/Doubly-linked_list/Element_insertion#Python
-# Modifications made by Berkelly Gonzalez
+#Written by Berkelly Gonzalez as a reference for SBCC's ICPC 2021 teams
+#Please read the comments, known limitations of the code denoted with "Caution!"
+#Other limitations may still exist, don't forget to test edge cases before submitting
 
 def find(data, node):
     c = node
     while c is not None and c.data != data:
         c = c.nextN
-    return c  # only returns first instance, but can call function again using c.next to continue searching #
+    return c  # Only returns the first node with matching data, stick it in a loop to search entire list #
 
 
-def iter_forward(node):
+def iter_forward(node): 
     c = node
     while c is not None:
         yield c  # geeksforgeeks.org/use-yield-keyword-instead-return-keyword-python/#
@@ -27,8 +24,8 @@ def iter_backward(node):
 
 
 class Node(object):
-    def __init__(self, data, prev=None, nextN=None):  # the = means that argument has a default value and including it is optional #
-        # Caution! If the value of data is None it will break the find and iter functions #
+    def __init__(self, data, prev=None, nextN=None):  # the = means that argument has a default value and is optional #
+        # Caution! If the value of data is None it will break the find function #
         self.prev = prev
         self.nextN = nextN
         self.data = data
@@ -87,6 +84,7 @@ class DoublyLinkedList(object):
         newNode.prev = None
         self.head = newNode
         self.length += 1
+        return self.head # returns the head of the list #
 
     def insert_tail(self, newNode):  # can be used to insert into an empty list #
         if self.tail is None:
@@ -99,6 +97,7 @@ class DoublyLinkedList(object):
         newNode.next = None
         self.tail = newNode
         self.length += 1
+        return self.tail # returns the tail of the list #
 
     def delete_node(self, node):
         if node is self.tail:
@@ -112,7 +111,7 @@ class DoublyLinkedList(object):
             node.prev.nextN = node.nextN
 
         c = node.nextN
-        node.nextN = None
+        node.nextN = None # this and next line are likely not necessary, can remove if you really want to #
         node.prev = None
         self.length -= 1
         return c  # returns node after the one that was deleted, or none if tail was deleted #
